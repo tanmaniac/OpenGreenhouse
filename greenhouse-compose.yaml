@@ -1,0 +1,19 @@
+version: '2.4'
+services:
+  humidity:
+    image: greenhouse-service
+    build: 
+      context: .
+      dockerfile: Dockerfile.greenhouse-svc
+    volumes:
+      - ./sensors:/sensors
+    privileged: true
+    command: "python3 /sensors/dht_publisher.py 4 humidity1 --redis_host=redis"
+    restart: always
+  redis:
+    image: arm32v6/redis:5-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    mem_limit: 256m
+    command: redis-server --appendonly yes --tcp-backlog 128

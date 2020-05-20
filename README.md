@@ -15,9 +15,12 @@ All nodes communicate over Redis pubsub. Each sensor has an associated publisher
 
 ## How to run
 
+### Initial setup
+
 1. Install Docker on the Raspberry Pi:
 
 ```bash
+# Install docker
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker $(id -un)
@@ -25,9 +28,18 @@ sudo usermod -aG docker $(id -un)
 
 2. Install docker-compose to manage all the services
 
-<TODO>
+```bash
+sudo apt update && sudo apt install -y python3 python3 pip
+pip3 install docker-compose
+```
 
-3. Launch the services
+3. Overcommit memory for redis:
+
+```bash
+echo "vm.overcommit_memory=1" | sudo tee -a /etc/sysctl.conf
+```
+
+### Launching greenhouse stack
 
 ```bash
 docker-compose up -f greenhouse-compose.yaml -d

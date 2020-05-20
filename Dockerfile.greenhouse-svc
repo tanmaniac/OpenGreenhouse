@@ -1,0 +1,16 @@
+FROM arm32v6/python:3.7-alpine
+LABEL maintainer="tanmaniac https://github.com/tanmaniac"
+
+# Install dependencies
+# Unfortunately libgpiod2 is not in the Alpine repo, so we need to build it
+RUN apk --no-cache add git automake autoconf autoconf-archive libtool pkgconfig build-base \
+    linux-headers libc6-compat
+WORKDIR /opt
+RUN git clone https://salsa.debian.org/debian/libgpiod.git -b debian/1.2-3 --single-branch && \
+    cd libgpiod && \
+    ./autogen.sh && \
+    make && make install
+
+# Required python packages
+RUN pip3 install -U RPI.GPIO adafruit-blinka redis glog && \
+    pip3 install -U adafruit-circuitpython-dht
