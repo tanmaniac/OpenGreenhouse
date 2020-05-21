@@ -17,3 +17,10 @@ services:
     restart: unless-stopped
     mem_limit: 256m
     command: redis-server --appendonly yes --tcp-backlog 128
+  fan_control:
+    image: greenhouse-service
+    volumes:
+      - ./actuators:/actuators
+    privileged: true
+    command: "python3 /actuators/fan_controller.py 17 33 --redis_host=redis"
+    restart: always
