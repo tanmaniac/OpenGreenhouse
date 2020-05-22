@@ -4,7 +4,7 @@ LABEL maintainer="tanmaniac https://github.com/tanmaniac"
 # Install dependencies
 # Unfortunately libgpiod2 is not in the Alpine repo, so we need to build it
 RUN apk --no-cache add git automake autoconf autoconf-archive libtool pkgconfig build-base \
-    linux-headers libc6-compat
+    linux-headers libc6-compat i2c-tools
 WORKDIR /opt
 RUN git clone https://salsa.debian.org/debian/libgpiod.git -b debian/1.2-3 --single-branch && \
     cd libgpiod && \
@@ -12,5 +12,5 @@ RUN git clone https://salsa.debian.org/debian/libgpiod.git -b debian/1.2-3 --sin
     make && make install
 
 # Required python packages
-RUN pip3 install -U RPI.GPIO adafruit-blinka redis glog && \
-    pip3 install -U adafruit-circuitpython-dht
+RUN pip3 install -U RPI.GPIO adafruit-blinka redis glog smbus && \
+    pip3 install -U adafruit-circuitpython-dht adafruit-circuitpython-ads1x15

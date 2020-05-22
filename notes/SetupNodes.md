@@ -46,3 +46,20 @@ sudo apt install -y python3-pip libgpiod2
 pip3 install -U RPI.GPIO adafruit-blinka 
 pip3 install -U adafruit-circuitpython-dht
 ``` 
+
+## Moisture sensor
+
+#### Enable I2C
+
+- Execute `sudo raspi-config`, go to "Interfacing options" -> "I2C" and enable it, then reboot
+- Install I2C tools:
+
+```bash
+sudo apt update && sudo apt install -y python-smbus python3-smbus i2c-tools
+```
+
+- Install python modules for ADS1115 analog-to-digital converter:
+
+```bash
+pip3 install -U adafruit-circuitpython-ads1x15
+```

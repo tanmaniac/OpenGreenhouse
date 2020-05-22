@@ -10,6 +10,13 @@ services:
     privileged: true
     command: "python3 /sensors/dht_publisher.py 4 humidity1 --redis_host=redis"
     restart: always
+  moisture:
+    image: greenhouse-service
+    volumes:
+      - ./sensors:/sensors
+    privileged: true
+    command: "python3 /sensors/moisture_publisher.py 27 moisture1 --redis_host=redis"
+    restart: always
   redis:
     image: arm32v6/redis:5-alpine
     ports:
